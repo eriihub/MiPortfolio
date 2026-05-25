@@ -26,7 +26,8 @@
               </div>
               <div class="card-badges">
                 <span class="card-badge">{{ proj.lang }}</span>
-                <span class="card-badge card-badge-pub">Public</span>
+                <span v-if="proj.status" class="card-badge card-badge-wip">{{ proj.status }}</span>
+                <span v-else class="card-badge card-badge-pub">Public</span>
               </div>
             </div>
 
@@ -77,34 +78,35 @@ const moreEl = ref(null)
 
 const projects = [
   {
+    id: 'mytracker',
+    name: 'MyTracker',
+    desc: 'Aplicación Android para el seguimiento de hábitos y rutinas diarias. Construida con Java y SQLite para gestionar tu progreso de forma local y privada 📊',
+    icon: '📱',
+    char: '⟡',
+    lang: 'Java',
+    tags: ['Android', 'Java', 'SQLite', 'Hábitos'],
+    url: 'https://github.com/eriihub/MyTracker',
+  },
+  {
+    id: 'travelhub',
+    name: 'TravelHub',
+    desc: 'Plataforma web para planificar y compartir viajes — rutas, destinos y experiencias en un solo lugar. Proyecto en activo desarrollo ✈️',
+    icon: '✈️',
+    char: '♡',
+    lang: 'Vue',
+    status: 'En desarrollo',
+    tags: ['Vue 3', 'Vite', 'JavaScript', 'Viajes'],
+    url: 'https://github.com/eriihub/TravelHub',
+  },
+  {
     id: 'eriihub',
     name: 'eriihub',
-    desc: 'Mi perfil de GitHub personalizado — una presentación coqueta con skills, contactos y más. El primer repo que todos ven ✦',
+    desc: 'Mi perfil de GitHub personalizado — una presentación coqueta con skills, contactos y proyectos destacados. El primer repo que todos ven ✦',
     icon: '☾',
-    char: '⟡',
+    char: '✦',
     lang: 'Markdown',
     tags: ['Profile', 'README', 'GitHub'],
     url: 'https://github.com/eriihub/eriihub',
-  },
-  {
-    id: 'programa1',
-    name: 'Programa 1',
-    desc: 'Proyecto de programación Java — código limpio y funcional desarrollado con dedicación y atención al detalle 💜',
-    icon: '✰',
-    char: '♡',
-    lang: 'Java',
-    tags: ['Java', 'Programación', 'Backend'],
-    url: 'https://github.com/eriihub/programa1',
-  },
-  {
-    id: 'programa2',
-    name: 'Programa 2',
-    desc: 'Segunda entrega de proyecto — avanzando en la construcción de soluciones robustas y elegantes ✦',
-    icon: '✰',
-    char: '✦',
-    lang: 'Java',
-    tags: ['Java', 'Programación', 'Backend'],
-    url: 'https://github.com/eriihub/programa2',
   },
 ]
 
@@ -279,6 +281,12 @@ onMounted(() => {
   color: var(--clr-lilac);
   border-color: rgba(180, 130, 220, 0.25);
   background: rgba(160, 100, 220, 0.06);
+}
+
+.card-badge-wip {
+  color: #f5a623;
+  border-color: rgba(245, 166, 35, 0.35);
+  background: rgba(245, 166, 35, 0.08);
 }
 
 .card-title {
