@@ -109,9 +109,9 @@ const layoutEl = ref(null)
 const education = [
   {
     id: 'dam',
-    date: '2024 – Actualidad',
-    type: 'current',
-    typeLabel: 'En curso',
+    date: '2024 – 2026',
+    type: 'done',
+    typeLabel: 'Completado',
     title: 'Técnico Superior en Desarrollo de Aplicaciones Multiplataforma',
     institution: 'Formación Profesional (CFGS · DAM) IES El Rincón',
     desc: 'Desarrollo de aplicaciones en entornos cliente/servidor, bases de datos, programación orientada a objetos e interfaces multiplataforma.',

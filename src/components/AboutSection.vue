@@ -71,9 +71,7 @@
 
           <div class="about-body">
             <p>
-              Hola, soy <strong>Erika Sofía Ruiz de Almiró​n Trelles</strong> — estudiante de
-              <strong>Desarrollo de Aplicaciones Multiplataforma (DAM)</strong> en 2.º curso,
-              con base en Bachillerato Tecnológico y un enfoque orientado al aprendizaje continuo. 🌸
+              Hola, soy <strong>Erika Sofía Ruiz de Almiró​n Trelles</strong> — Técnica Superior en Programación con adaptabilidad a diferentes tecnologías y capacidad demostrada para la resolución de problemas. 🌸
             </p>
             <p>
               Me apasiona crear interfaces que emocionan y código funcional.
@@ -545,6 +543,7 @@ onMounted(() => {
   .about-text {
     opacity: 1 !important;
     transform: none !important;
+    text-align: left;
   }
 
   .about-traits {
@@ -552,7 +551,7 @@ onMounted(() => {
   }
 
   .about-social-btns {
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .sticker-tl {
