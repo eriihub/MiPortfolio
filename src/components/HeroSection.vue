@@ -15,7 +15,7 @@
 
     <div class="container hero-content">
       <div class="hero-badge pill" id="hero-badge">
-        <span>✦</span> Estudiante en prácticas · DAM 2º curso
+        <span>✦</span> Técnica Superior en Programación
       </div>
 
       <h1 class="hero-title" id="hero-title">

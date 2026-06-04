@@ -64,13 +64,13 @@ const skillGroups = [
       { name: 'Vue.js 𓆰', color: '#42b883' },
       { name: 'Angular', color: '#dd0031' },
       { name: 'Tailwind CSS 𖦹', color: '#38bdf8' },
+      { name: 'Bootstrap 𓍢', color: '#c9b1ff' },
     ]
   },
   {
     name: 'Bases de datos', icon: '⟡',
     skills: [
       { name: 'MySQL 𓆞', color: '#4479a1' },
-      { name: 'Bootstrap 𓍢', color: '#c9b1ff' },
       { name: 'SQL 𓇻', color: '#60a5fa' },
       { name: 'PostgreSQL 𓃰', color: '#336791' },
       { name: 'SQLite 𓇚', color: '#003B57' },
