@@ -123,7 +123,7 @@ const education = [
     type: 'current',
     typeLabel: 'En preparación',
     title: 'Certificación Oficial de Angular',
-    institution: 'Angular (Google)',
+    institution: 'Certificates.dev',
     desc: 'Preparación para la obtención del certificado oficial que avala el dominio del framework para aplicaciones web escalables.',
     tags: ['Angular', 'TypeScript', 'Frontend'],
   },
