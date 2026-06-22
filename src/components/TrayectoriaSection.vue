@@ -338,6 +338,13 @@ onMounted(() => {
   flex-wrap: wrap;
 }
 
+.tl-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .pill-date {
   font-size: 0.7rem;
   padding: 3px 10px;

@@ -203,7 +203,7 @@ const contactLinks = [
   {
     id: 'contact-linkedin',
     label: 'LinkedIn',
-    value: 'Erika Sofía Ruiz de Almirón Trelles',
+    value: 'Erika Sofía Ruiz De Almirón Trelles',
     href: 'https://es.linkedin.com/in/erika-sof%C3%ADa-ruiz-de-almir%C3%B3n-trelles-894b65364',
     external: true,
     icon: `<svg style="margin-top: 10px;" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
