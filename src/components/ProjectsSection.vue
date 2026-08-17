@@ -88,11 +88,11 @@ const projects = [
   {
     id: 'mytracker',
     name: 'MyTracker',
-    desc: 'Aplicación Android para el seguimiento de hábitos y rutinas diarias. Construida con Java y SQLite para gestionar tu progreso de forma local y privada 📊',
-    icon: '📱',
+    desc: 'Aplicación web para el seguimiento de hábitos y rutinas diarias. Construida con Vue 3 y Vite para llevar el control de tu progreso de forma sencilla 📊',
+    icon: '📊',
     char: '⟡',
-    lang: 'Java',
-    tags: ['Android', 'Java', 'SQLite', 'Hábitos'],
+    lang: 'Vue',
+    tags: ['Vue 3', 'Vite', 'JavaScript', 'Hábitos'],
     url: 'https://github.com/eriihub/MyTracker',
   },
   {
