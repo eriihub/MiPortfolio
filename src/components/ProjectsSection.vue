@@ -99,7 +99,7 @@ const projects = [
     id: 'cookychat',
     name: 'Cooky Chat',
     desc: 'Plataforma de mensajería y videollamadas en tiempo real. Destaca por su interfaz fluida con temática cálida, ventanas de video Picture-in-Picture (PiP) y gestión avanzada de sesiones seguras.',
-    iconImg: '/cooky-favicon.ico',
+    iconImg: '/cooky-icon.png',
     char: '⊹',
     lang: 'Next.js',
     private: true,
@@ -376,10 +376,11 @@ onMounted(() => {
 }
 
 .card-icon-img {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
   border-radius: 4px;
+  image-rendering: crisp-edges;
 }
 
 .card-sparkles {
