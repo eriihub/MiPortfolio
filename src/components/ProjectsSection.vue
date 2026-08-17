@@ -11,7 +11,9 @@
       </div>
 
       <div class="projects-grid" ref="gridEl">
-        <article v-for="(proj, i) in projects" :key="proj.id" class="project-card glass" :id="`project-card-${proj.id}`"
+        <article v-for="(proj, i) in projects" :key="proj.id"
+          :class="['project-card', 'glass', { 'card-featured': proj.id === 'cookychat' }]"
+          :id="`project-card-${proj.id}`"
           :style="`animation-delay: ${i * 0.12}s`">
           <!-- Shimmer overlay -->
           <div class="card-shimmer" aria-hidden="true"></div>
@@ -428,5 +430,43 @@ onMounted(() => {
   .projects-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ── Featured card: Cooky Chat aura ── */
+@keyframes aura-pulse {
+  0% {
+    box-shadow:
+      0 0 0 1px rgba(216, 126, 255, 0.25),
+      0 0 14px rgba(184, 91, 230, 0.15),
+      0 0 28px rgba(230, 91, 219, 0.08),
+      0 8px 32px rgba(0, 0, 0, 0.35);
+  }
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(216, 126, 255, 0.55),
+      0 0 22px rgba(184, 91, 230, 0.35),
+      0 0 50px rgba(230, 91, 219, 0.18),
+      0 8px 40px rgba(140, 60, 200, 0.2),
+      0 8px 32px rgba(0, 0, 0, 0.35);
+  }
+}
+
+.card-featured {
+  border-color: rgba(216, 126, 255, 0.4);
+  animation:
+    fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both,
+    aura-pulse 4s ease-in-out infinite alternate;
+}
+
+.card-featured:hover {
+  border-color: rgba(216, 126, 255, 0.7);
+  box-shadow:
+    0 0 0 1px rgba(216, 126, 255, 0.7),
+    0 0 30px rgba(184, 91, 230, 0.45),
+    0 0 60px rgba(230, 91, 219, 0.25),
+    0 16px 50px rgba(140, 80, 210, 0.35),
+    0 4px 16px rgba(0, 0, 0, 0.4);
+  animation:
+    fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 </style>
