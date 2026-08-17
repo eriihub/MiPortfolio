@@ -99,7 +99,7 @@ const projects = [
     id: 'cookychat',
     name: 'Cooky Chat',
     desc: 'Plataforma de mensajería y videollamadas en tiempo real. Destaca por su interfaz fluida con temática cálida, ventanas de video Picture-in-Picture (PiP) y gestión avanzada de sesiones seguras.',
-    iconImg: '/cooky-icon.png',
+    iconImg: import.meta.env.BASE_URL + 'cooky-icon.png',
     char: '⊹',
     lang: 'Next.js',
     private: true,
