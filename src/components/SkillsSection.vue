@@ -5,9 +5,9 @@
       <div class="section-header" ref="headerEl">
         <div class="section-label">✦ ₊ ⊹ Skills</div>
         <h2 class="section-title" id="skills-title">
-          Lo que <span class="accent">domino</span>
+          {{ lang === 'es' ? 'Lo que' : 'What I' }} <span class="accent">{{ lang === 'es' ? 'domino' : 'master' }}</span>
         </h2>
-        <p class="section-subtitle">Tecnologías y herramientas con las que creo ✦</p>
+        <p class="section-subtitle">{{ lang === 'es' ? 'Tecnologías y herramientas con las que creo ✦' : 'Technologies and tools I build with ✦' }}</p>
       </div>
 
       <div class="skills-grid" ref="gridEl">
@@ -25,83 +25,132 @@
           </div>
         </div>
       </div>
-
-      <!-- Barra decorativa -->
-      <div class="vibe-bar" ref="vibeEl">
-        <span class="vibe-label">✦ Nivel de coquetería del código</span>
-        <div class="vibe-dots">
-          <span v-for="i in 10" :key="i" class="vibe-dot" :class="{ lit: i <= 9 }"
-            :style="`animation-delay: ${i * 0.07}s`"></span>
-        </div>
-        <span class="vibe-label">✦ Máximo ✦</span>
-      </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
+import { useLanguage } from '../composables/useLanguage.js'
+const { lang } = useLanguage()
 
 const headerEl = ref(null)
 const gridEl = ref(null)
 const vibeEl = ref(null)
 
-const skillGroups = [
+const skillGroupsEs = [
   {
     name: 'Lenguajes', icon: '♡',
     skills: [
-      { name: 'Java ☕︎', color: '#f89820' },
-      { name: 'JavaScript 𖤓', color: '#f7df1e' },
-      { name: 'Python 𓆙', color: '#3178c6' },
-      { name: 'HTML5 𓏲', color: '#e34f26' },
-      { name: 'CSS3 𓇢', color: '#1572b6' },
-      { name: 'Kotlin 𓍯', color: '#c084fc' },
+      { name: 'Java', color: '#f89820' },
+      { name: 'JavaScript', color: '#f7df1e' },
+      { name: 'Python', color: '#3178c6' },
+      { name: 'HTML5', color: '#e34f26' },
+      { name: 'CSS3', color: '#1572b6' },
+      { name: 'Kotlin', color: '#c084fc' },
     ]
   },
   {
     name: 'Frameworks & Libs', icon: '✦',
     skills: [
-      { name: 'Vue.js 𓆰', color: '#42b883' },
+      { name: 'Vue.js', color: '#42b883' },
       { name: 'Angular', color: '#dd0031' },
-      { name: 'Tailwind CSS 𖦹', color: '#38bdf8' },
-      { name: 'Bootstrap 𓍢', color: '#c9b1ff' },
+      { name: 'Tailwind CSS', color: '#38bdf8' },
+      { name: 'Bootstrap', color: '#c9b1ff' },
     ]
   },
   {
     name: 'Bases de datos', icon: '⟡',
     skills: [
-      { name: 'MySQL 𓆞', color: '#4479a1' },
-      { name: 'SQL 𓇻', color: '#60a5fa' },
-      { name: 'PostgreSQL 𓃰', color: '#336791' },
-      { name: 'SQLite 𓇚', color: '#003B57' },
+      { name: 'MySQL', color: '#4479a1' },
+      { name: 'SQL', color: '#60a5fa' },
+      { name: 'PostgreSQL', color: '#336791' },
+      { name: 'SQLite', color: '#003B57' },
     ]
   },
   {
     name: 'Herramientas', icon: '⊹',
     skills: [
-      { name: 'Git 𓍝', color: '#f05032' },
-      { name: 'GitHub 𓆦', color: '#e2e8f0' },
-      { name: 'VS Code 𓍲', color: '#007acc' },
+      { name: 'Git', color: '#f05032' },
+      { name: 'GitHub', color: '#e2e8f0' },
+      { name: 'VS Code', color: '#007acc' },
       { name: 'IntelliJ', color: '#fe315d' },
-      { name: 'Antigravity ✦', color: '#007acc' },
+      { name: 'Antigravity', color: '#007acc' },
       { name: 'Android Studio', color: '#66BB6A' },
     ]
   },
   {
-    name: 'Sistemas', icon: '♢',
+    name: 'Sistemas Operativos', icon: '♢',
     skills: [
       { name: 'Windows', color: '#00a4ef' },
-      { name: 'Linux 𓅄', color: '#fcc624' },
+      { name: 'Linux', color: '#fcc624' },
     ]
   },
   {
     name: 'Diseño & UX', icon: '𐙚',
     skills: [
-      { name: 'CSS Animations 𖦹', color: '#38bdf8' },
+      { name: 'CSS Animations', color: '#38bdf8' },
       { name: 'Glassmorphism', color: '#c084fc' },
     ]
   },
 ]
+const skillGroupsEn = [
+  {
+    name: 'Languages', icon: '♡',
+    skills: [
+      { name: 'Java', color: '#f89820' },
+      { name: 'JavaScript', color: '#f7df1e' },
+      { name: 'Python', color: '#3178c6' },
+      { name: 'HTML5', color: '#e34f26' },
+      { name: 'CSS3', color: '#1572b6' },
+      { name: 'Kotlin', color: '#c084fc' },
+    ]
+  },
+  {
+    name: 'Frameworks & Libs', icon: '✦',
+    skills: [
+      { name: 'Vue.js', color: '#42b883' },
+      { name: 'Angular', color: '#dd0031' },
+      { name: 'Tailwind CSS', color: '#38bdf8' },
+      { name: 'Bootstrap', color: '#c9b1ff' },
+    ]
+  },
+  {
+    name: 'Databases', icon: '⟡',
+    skills: [
+      { name: 'MySQL', color: '#4479a1' },
+      { name: 'SQL', color: '#60a5fa' },
+      { name: 'PostgreSQL', color: '#336791' },
+      { name: 'SQLite', color: '#003B57' },
+    ]
+  },
+  {
+    name: 'Tools', icon: '⊹',
+    skills: [
+      { name: 'Git', color: '#f05032' },
+      { name: 'GitHub', color: '#e2e8f0' },
+      { name: 'VS Code', color: '#007acc' },
+      { name: 'IntelliJ', color: '#fe315d' },
+      { name: 'Antigravity', color: '#007acc' },
+      { name: 'Android Studio', color: '#66BB6A' },
+    ]
+  },
+  {
+    name: 'Operative Systems', icon: '♢',
+    skills: [
+      { name: 'Windows', color: '#00a4ef' },
+      { name: 'Linux', color: '#fcc624' },
+    ]
+  },
+  {
+    name: 'Design & UX', icon: '𐙚',
+    skills: [
+      { name: 'CSS Animations', color: '#38bdf8' },
+      { name: 'Glassmorphism', color: '#c084fc' },
+    ]
+  },
+]
+const skillGroups = computed(() => lang.value === 'es' ? skillGroupsEs : skillGroupsEn)
 
 onMounted(() => {
   const obs = new IntersectionObserver(entries => {

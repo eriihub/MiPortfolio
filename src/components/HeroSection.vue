@@ -15,18 +15,24 @@
 
     <div class="container hero-content">
       <div class="hero-badge pill" id="hero-badge">
-        <span>✦</span> Técnica Superior en Programación
+        <span>✦</span> {{ lang === 'es' ? 'Técnica Superior en Programación' : 'Higher Technician in Programming' }}
       </div>
 
       <h1 class="hero-title" id="hero-title">
-        <span class="hero-hi">Bienvenidos, soy</span>
+        <span class="hero-hi">{{ lang === 'es' ? 'Bienvenidos, soy' : 'Welcome, I am' }}</span>
         <span class="hero-name glow-text">Erika</span>
         <span class="hero-emoji">₊˚𓆩༺✧༻𓆪˚₊</span>
       </h1>
 
       <p class="hero-subtitle">
-        Transformando el aprendizaje continuo en <span class="gradient-word">código limpio</span>
-        y experiencias digitales <span class="gradient-word">únicas</span> ✦
+        <template v-if="lang === 'es'">
+          Transformando el aprendizaje continuo en <span class="gradient-word">código limpio</span>
+          y experiencias digitales <span class="gradient-word">únicas</span> ✦
+        </template>
+        <template v-else>
+          Turning continuous learning into <span class="gradient-word">clean code</span>
+          and <span class="gradient-word">unique</span> digital experiences ✦
+        </template>
       </p>
 
       <div class="hero-chars" aria-hidden="true">
@@ -45,10 +51,10 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M3 7h18M3 12h18M3 17h12" />
           </svg>
-          Ver proyectos
+          {{ lang === 'es' ? 'Ver proyectos' : 'View projects' }}
         </a>
         <a href="#contacto" class="btn btn-ghost" id="hero-btn-contact">
-          Contactarme ♡
+          {{ lang === 'es' ? 'Contactarme ♡' : 'Contact me ♡' }}
         </a>
       </div>
 
@@ -80,6 +86,8 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useLanguage } from '../composables/useLanguage.js'
+const { lang } = useLanguage()
 
 const canvasEl = ref(null)
 let animFrameId = null

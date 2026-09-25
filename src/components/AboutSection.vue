@@ -18,7 +18,7 @@
             <div class="avatar-card glass">
               <div class="avatar-bg-glow" aria-hidden="true"></div>
               <div class="avatar-photo-wrap">
-                <img src="https://github.com/eriihub.png" alt="Foto de perfil de Erika" class="avatar-photo"
+                <img src="https://github.com/eriihub.png" :alt="lang === 'es' ? 'Foto de perfil de Erika' : 'Erika profile picture'" class="avatar-photo"
                   loading="lazy" />
                 <span class="av-float av-1">✦</span>
                 <span class="av-float av-2">⊹</span>
@@ -32,8 +32,8 @@
               </div>
             </div>
             <!-- Stickers flotantes -->
-            <div class="sticker sticker-tl glass">✦ Aplicada</div>
-            <div class="sticker sticker-br glass">𐦍 Creativa</div>
+            <div class="sticker sticker-tl glass">✦ {{ lang === 'es' ? 'Aplicada' : 'Diligent' }}</div>
+            <div class="sticker sticker-br glass">𐦍 {{ lang === 'es' ? 'Creativa' : 'Creative' }}</div>
           </div>
 
           <!-- Stats row -->
@@ -42,21 +42,21 @@
               <span class="stat-icon">&nbsp;🗀&nbsp;</span>
               <div class="stat-data">
                 <span class="stat-num">3</span>
-                <span class="stat-label">Repos</span>
+                <span class="stat-label">{{ lang === 'es' ? 'Repos' : 'Repos' }}</span>
               </div>
             </div>
             <div class="stat-item glass" id="stat-tech">
               <span class="stat-icon">&nbsp;⚡︎&nbsp;</span>
               <div class="stat-data">
                 <span class="stat-num">10+</span>
-                <span class="stat-label">Tecnologías</span>
+                <span class="stat-label">{{ lang === 'es' ? 'Tecnologías' : 'Technologies' }}</span>
               </div>
             </div>
             <div class="stat-item glass" id="stat-passion">
               <span class="stat-icon">&nbsp;♡&nbsp;</span>
               <div class="stat-data">
                 <span class="stat-num">∞</span>
-                <span class="stat-label">Pasión</span>
+                <span class="stat-label">{{ lang === 'es' ? 'Pasión' : 'Passion' }}</span>
               </div>
             </div>
           </div>
@@ -64,19 +64,32 @@
 
         <!-- Texto -->
         <div class="about-text" ref="textEl">
-          <div class="section-label">⋆.𐙚 ̊ Sobre mí</div>
+          <div class="section-label">⋆.𐙚 ̊ {{ lang === 'es' ? 'Sobre mí' : 'About me' }}</div>
           <h2 class="section-title" id="about-title">
-            Una dev que ama crear <span class="accent">cosas bonitas</span>
+            <template v-if="lang === 'es'">
+              Una dev que ama crear <span class="accent">cosas bonitas</span>
+            </template>
+            <template v-else>
+              A dev who loves creating <span class="accent">beautiful things</span>
+            </template>
           </h2>
 
           <div class="about-body">
-            <p>
-              Hola, soy <strong>Erika Sofía Ruiz de Almiró​n Trelles</strong> — Técnica Superior en Programación con adaptabilidad a diferentes tecnologías y capacidad demostrada para la resolución de problemas. 🌸
+            <p v-if="lang === 'es'">
+              Hola, soy <strong>Erika Sofía Ruiz De Almirón Trelles</strong> &mdash; Técnica Superior en Programación con adaptabilidad a diferentes tecnologías y capacidad demostrada para la resolución de problemas. 🌸
             </p>
-            <p>
+            <p v-else>
+              Hi, I'm <strong>Erika Sofía Ruiz De Almirón Trelles</strong> &mdash; Higher Technician in Programming, adaptable to different technologies with a proven ability to solve problems. 🌸
+            </p>
+            <p v-if="lang === 'es'">
               Me apasiona crear interfaces que emocionan y código funcional.
               Aprendo rápido, tengo ojo para el detalle y disfruto mezclando técnica
               con creatividad. Actualmente en búsqueda activa de oportunidades. ✦
+            </p>
+            <p v-else>
+              I'm passionate about building interfaces that impress and functional code.
+              I learn fast, have an eye for detail and enjoy blending technique
+              with creativity. Currently actively seeking opportunities. ✦
             </p>
           </div>
 
@@ -117,16 +130,26 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useLanguage } from '../composables/useLanguage.js'
+const { lang } = useLanguage()
 
 const visualEl = ref(null)
 const textEl = ref(null)
 
-const traits = [
+const traitsEs = [
   { key: 'pixel', icon: '✦', label: 'Pixel-Perfect', desc: 'Obsesión por el detalle visual' },
   { key: 'builder', icon: '⚡︎', label: 'Fast Learner', desc: 'De cero a funcional en tiempo récord' },
   { key: 'creative', icon: '❀', label: 'Creative Coder', desc: 'Código con alma y diseño que impacta' },
   { key: 'driven', icon: '♕', label: 'Goal-Driven', desc: 'Foco total en resultados que importan' },
 ]
+const traitsEn = [
+  { key: 'pixel', icon: '✦', label: 'Pixel-Perfect', desc: 'Obsession for visual detail' },
+  { key: 'builder', icon: '⚡︎', label: 'Fast Learner', desc: 'Zero to functional in record time' },
+  { key: 'creative', icon: '❀', label: 'Creative Coder', desc: 'Code with soul and impactful design' },
+  { key: 'driven', icon: '♕', label: 'Goal-Driven', desc: 'Total focus on results that matter' },
+]
+import { computed } from 'vue'
+const traits = computed(() => lang.value === 'es' ? traitsEs : traitsEn)
 
 onMounted(() => {
   const obs = new IntersectionObserver((entries) => {

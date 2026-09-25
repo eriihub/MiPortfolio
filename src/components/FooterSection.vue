@@ -12,7 +12,7 @@
           <span class="b-spark">✦</span>
         </div>
         <p class="brand-sub">
-          Hecha con amor y código 💜
+          {{ lang === 'es' ? 'Hecha con amor y código 💜' : 'Made with love and code 💜' }}
         </p>
         <div class="footer-chars" aria-hidden="true">
           <span v-for="c in chars" :key="c" class="fc">{{ c }}</span>
@@ -22,16 +22,16 @@
       <!-- Links -->
       <div class="footer-links">
         <div class="fl-group">
-          <span class="fl-head">✦ Navegar</span>
-          <a href="#inicio" class="fl-link">Inicio</a>
-          <a href="#sobre-mi" class="fl-link">Sobre mí</a>
-          <a href="#trayectoria" class="fl-link">Trayectoria</a>
+          <span class="fl-head">✦ {{ lang === 'es' ? 'Navegar' : 'Navigation' }}</span>
+          <a href="#inicio" class="fl-link">{{ lang === 'es' ? 'Inicio' : 'Home' }}</a>
+          <a href="#sobre-mi" class="fl-link">{{ lang === 'es' ? 'Sobre mí' : 'About me' }}</a>
+          <a href="#trayectoria" class="fl-link">{{ lang === 'es' ? 'Trayectoria' : 'Journey' }}</a>
           <a href="#skills" class="fl-link">Skills</a>
-          <a href="#proyectos" class="fl-link">Proyectos</a>
-          <a href="#contacto" class="fl-link">Contacto</a>
+          <a href="#proyectos" class="fl-link">{{ lang === 'es' ? 'Proyectos' : 'Projects' }}</a>
+          <a href="#contacto" class="fl-link">{{ lang === 'es' ? 'Contacto' : 'Contact' }}</a>
         </div>
         <div class="fl-group">
-          <span class="fl-head">⊹ Perfiles</span>
+          <span class="fl-head">⊹ {{ lang === 'es' ? 'Perfiles' : 'Profiles' }}</span>
           <a href="https://github.com/eriihub" target="_blank" rel="noopener" class="fl-link">
             GitHub ↗
           </a>
@@ -46,7 +46,7 @@
     <!-- Bottom bar -->
     <div class="footer-bottom">
       <div class="container footer-bottom-inner">
-        <span class="footer-copy">© 2026 &nbsp; erihub 𑣲 &nbsp; Todos los derechos reservados</span>
+        <span class="footer-copy">© 2026 &nbsp; erihub 𑣲 &nbsp; {{ lang === 'es' ? 'Todos los derechos reservados' : 'All rights reserved' }}</span>
         <span class="footer-emojis">♡ ♢ ♤ ♧</span>
       </div>
     </div>
@@ -54,6 +54,9 @@
 </template>
 
 <script setup>
+import { useLanguage } from '../composables/useLanguage.js'
+
+const { lang } = useLanguage()
 const chars = ['♡', '♢', '♤', '♧', '⋆', '✦', '⊹', '⟡', '˖', '₊']
 </script>
 

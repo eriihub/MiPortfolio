@@ -3,11 +3,11 @@
     <div class="orb orb-proj" aria-hidden="true"></div>
     <div class="container">
       <div class="section-header" ref="headerEl">
-        <div class="section-label">⟡ ₊ Proyectos</div>
+        <div class="section-label">⟡ ₊ {{ lang === 'es' ? 'Proyectos' : 'Projects' }}</div>
         <h2 class="section-title" id="projects-title">
-          Mis <span class="accent">creaciones</span>
+          {{ lang === 'es' ? 'Mis' : 'My' }} <span class="accent">{{ lang === 'es' ? 'creaciones' : 'creations' }}</span>
         </h2>
-        <p class="section-subtitle">Repos públicos en GitHub ✦</p>
+        <p class="section-subtitle">{{ lang === 'es' ? 'Repos públicos en GitHub ✦' : 'Public repos on GitHub ✦' }}</p>
       </div>
 
       <div class="projects-grid" ref="gridEl">
@@ -29,8 +29,8 @@
               </div>
               <div class="card-badges">
                 <span class="card-badge">{{ proj.lang }}</span>
-                <span v-if="proj.private" class="card-badge card-badge-private">Private</span>
-                <span v-else class="card-badge card-badge-pub">Public</span>
+                <span v-if="proj.private" class="card-badge card-badge-private">{{ lang === 'es' ? 'Privado' : 'Private' }}</span>
+                <span v-else class="card-badge card-badge-pub">{{ lang === 'es' ? 'Público' : 'Public' }}</span>
                 <span v-if="proj.status" class="card-badge card-badge-wip">{{ proj.status }}</span>
               </div>
             </div>
@@ -47,7 +47,7 @@
             <!-- Repo privado: enlace desactivado con candado -->
             <span v-if="proj.private" class="card-link card-link-private" :id="`project-link-${proj.id}`">
               <span class="lock-icon" aria-hidden="true">🔒</span>
-              Repositorio Privado
+              {{ lang === 'es' ? 'Repositorio Privado' : 'Private Repository' }}
             </span>
             <!-- Repo público: enlace a GitHub -->
             <a v-else :href="proj.url" target="_blank" rel="noopener" class="card-link" :id="`project-link-${proj.id}`">
@@ -55,7 +55,7 @@
                 <path
                   d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
               </svg>
-              Ver en GitHub
+              {{ lang === 'es' ? 'Ver en GitHub' : 'View on GitHub' }}
             </a>
             <div class="card-sparkles" aria-hidden="true">
               <span class="cs">✦</span>
@@ -66,10 +66,10 @@
       </div>
 
       <div class="projects-more" ref="moreEl">
-        <p class="more-text">¿Quieres ver más? Todo está en mi GitHub ♡</p>
+        <p class="more-text">{{ lang === 'es' ? '¿Quieres ver más? Todo está en mi GitHub ♡' : 'Want to see more? Everything is on my GitHub ♡' }}</p>
         <a href="https://github.com/eriihub?tab=repositories" target="_blank" rel="noopener" class="btn btn-primary"
           id="projects-more-btn">
-          Ver todos los repos
+          {{ lang === 'es' ? 'Ver todos los repos' : 'View all repos' }}
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M7 17L17 7M17 7H7M17 7v10" />
           </svg>
@@ -80,19 +80,21 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
+import { useLanguage } from '../composables/useLanguage.js'
+const { lang } = useLanguage()
 
 const headerEl = ref(null)
 const gridEl = ref(null)
 const moreEl = ref(null)
 
-const projects = [
+const projectsEs = [
   {
     id: 'mytracker',
     name: 'MyTracker',
     desc: 'Aplicación web para el seguimiento de hábitos y rutinas diarias. Construida con Vue 3 y Vite para llevar el control de tu progreso de forma sencilla 📊',
     icon: '📊',
-    char: '⟡',
+    char: '➡',
     lang: 'Vue',
     tags: ['Vue 3', 'Vite', 'JavaScript', 'Hábitos'],
     url: 'https://github.com/eriihub/MyTracker',
@@ -100,8 +102,8 @@ const projects = [
   {
     id: 'cookychat',
     name: 'Cooky Chat',
-    desc: 'Plataforma de mensajería y videollamadas en tiempo real. Destaca por su interfaz fluida con temática cálida, ventanas de video Picture-in-Picture (PiP) y gestión avanzada de sesiones seguras.',
-    iconImg: import.meta.env.BASE_URL + 'cooky-icon.png',
+    desc: 'Plataforma de mensajería y videollamadas en tiempo real. Destaca por su interfaz con temática cálida, ventanas de video Picture-in-Picture (PiP) con transcripción en tiempo real y gestión avanzada de sesiones seguras.',
+    iconImg: import.meta.env.BASE_URL + 'favicon.ico',
     char: '⊹',
     lang: 'Next.js',
     private: true,
@@ -121,6 +123,42 @@ const projects = [
     url: 'https://github.com/eriihub/TravelHub',
   },
 ]
+const projectsEn = [
+  {
+    id: 'mytracker',
+    name: 'MyTracker',
+    desc: 'Web app for tracking daily habits and routines. Built with Vue 3 and Vite to easily monitor your progress 📊',
+    icon: '📊',
+    char: '➡',
+    lang: 'Vue',
+    tags: ['Vue 3', 'Vite', 'JavaScript', 'Habits'],
+    url: 'https://github.com/eriihub/MyTracker',
+  },
+  {
+    id: 'cookychat',
+    name: 'Cooky Chat',
+    desc: 'Real-time messaging and video call platform. Features a warm-themed interface, Picture-in-Picture (PiP) video windows with real-time chat transcription and advanced secure session management.',
+    iconImg: import.meta.env.BASE_URL + 'favicon.ico',
+    char: '⊹',
+    lang: 'Next.js',
+    private: true,
+    status: 'In development',
+    tags: ['React', 'TypeScript', 'WebRTC', 'CSS'],
+    url: null,
+  },
+  {
+    id: 'travelhub',
+    name: 'TravelHub',
+    desc: 'Web platform to plan and share trips — routes, destinations and experiences all in one place. Actively in development ✈️',
+    icon: '✈️',
+    char: '♡',
+    lang: 'Vue',
+    status: 'In development',
+    tags: ['Vue 3', 'Vite', 'JavaScript', 'Travel'],
+    url: 'https://github.com/eriihub/TravelHub',
+  },
+]
+const projects = computed(() => lang.value === 'es' ? projectsEs : projectsEn)
 
 onMounted(() => {
   const obs = new IntersectionObserver(entries => {

@@ -17,13 +17,19 @@
     <div class="container">
       <div class="contact-inner" ref="innerEl">
         <!-- Header -->
-        <div class="section-label">♡ ₊ ⊹ Contacto</div>
+        <div class="section-label">♡ ₊ ⊹ {{ lang === 'es' ? 'Contacto' : 'Contact' }}</div>
         <h2 class="section-title" id="contact-title">
-          Hablemos <span class="accent">✦</span>
+          {{ lang === 'es' ? 'Hablemos' : "Let's talk" }} <span class="accent">✦</span>
         </h2>
         <p class="contact-subtitle">
-          ¿Tienes un proyecto, una idea o simplemente quieres saludar? 🌸<br>
-          ¡Encantada de leerte!
+          <template v-if="lang === 'es'">
+            ¿Tienes un proyecto, una idea o simplemente quieres saludar? 🌸<br>
+            ¡Encantada de leerte!
+          </template>
+          <template v-else>
+            Have a project, an idea, or just want to say hi? 🌸<br>
+            I'd love to hear from you!
+          </template>
         </p>
 
         <div class="contact-grid">
@@ -46,18 +52,18 @@
           <!-- Formulario glass -->
           <form class="contact-form glass" @submit.prevent="onSubmit" id="contact-form">
             <div class="form-field">
-              <label for="contact-name">Nombre</label>
-              <input id="contact-name" v-model="form.name" type="text" placeholder="Tu nombre ♡" autocomplete="name"
+              <label for="contact-name">{{ lang === 'es' ? 'Nombre' : 'Name' }}</label>
+              <input id="contact-name" v-model="form.name" type="text" :placeholder="lang === 'es' ? 'Tu nombre ♡' : 'Your name ♡'" autocomplete="name"
                 required />
             </div>
             <div class="form-field">
-              <label for="contact-email">Email</label>
-              <input id="contact-email" v-model="form.email" type="email" placeholder="tu@email.com"
+              <label for="contact-email">{{ lang === 'es' ? 'Email' : 'Email' }}</label>
+              <input id="contact-email" v-model="form.email" type="email" :placeholder="lang === 'es' ? 'tu@email.com' : 'your@email.com'"
                 autocomplete="email" required />
             </div>
             <div class="form-field">
-              <label for="contact-msg">Mensaje</label>
-              <textarea id="contact-msg" v-model="form.message" rows="6" placeholder="Cuéntame todo ✦"
+              <label for="contact-msg">{{ lang === 'es' ? 'Mensaje' : 'Message' }}</label>
+              <textarea id="contact-msg" v-model="form.message" rows="6" :placeholder="lang === 'es' ? 'Cuéntame todo ✦' : 'Tell me everything ✦'"
                 required></textarea>
             </div>
 
@@ -65,12 +71,12 @@
               <svg v-if="!isSubmitting" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
               </svg>
-              {{ isSubmitting ? 'Enviando ✦...' : 'Enviar mensaje' }}
+              {{ isSubmitting ? (lang === 'es' ? 'Enviando ✦...' : 'Sending ✦...') : (lang === 'es' ? 'Enviar mensaje' : 'Send message') }}
             </button>
 
             <Transition name="fade">
               <div v-if="sent" class="form-success" id="contact-success">
-                <span>🪻</span> ¡Mensaje enviado! Te respondo pronto ✦
+                <span>🪻</span> {{ lang === 'es' ? '¡Mensaje enviado! Te respondo pronto ✦' : "Message sent! I'll reply soon ✦" }}
               </div>
             </Transition>
           </form>
@@ -87,6 +93,9 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useLanguage } from '../composables/useLanguage.js'
+
+const { lang } = useLanguage()
 
 const innerEl = ref(null)
 const sent = ref(false)
@@ -253,7 +262,7 @@ async function onSubmit() {
         name: form.value.name,
         email: form.value.email,
         message: form.value.message,
-        _subject: 'Nuevo mensaje de tu portfolio ✦'
+        _subject: lang.value === 'es' ? 'Nuevo mensaje de tu portfolio ✦' : 'New message from your portfolio ✦'
       })
     })
 
@@ -263,11 +272,11 @@ async function onSubmit() {
       setTimeout(() => (sent.value = false), 5000)
     } else {
       console.error('Error al enviar el formulario.')
-      alert('Hubo un problema al enviar el mensaje. Por favor, inténtalo de nuevo más tarde.')
+      alert(lang.value === 'es' ? 'Hubo un problema al enviar el mensaje. Por favor, inténtalo de nuevo más tarde.' : 'There was an issue sending the message. Please try again later.')
     }
   } catch (error) {
     console.error('Error en la petición:', error)
-    alert('Hubo un error de conexión. Revisa tu internet e inténtalo de nuevo.')
+    alert(lang.value === 'es' ? 'Hubo un error de conexión. Revisa tu internet e inténtalo de nuevo.' : 'Connection error. Please check your internet and try again.')
   } finally {
     isSubmitting.value = false
   }

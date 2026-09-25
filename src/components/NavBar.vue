@@ -33,10 +33,21 @@
           </svg>
           <span class="icon-label">LinkedIn</span>
         </a>
+        <!-- Language toggle -->
+        <button
+          id="nav-lang-btn"
+          class="nav-icon-btn nav-icon-btn--lang"
+          @click="toggleLang"
+          :title="lang === 'es' ? 'Switch to English' : 'Cambiar a Español'"
+          :aria-label="lang === 'es' ? 'Switch to English' : 'Cambiar a Español'"
+        >
+          <span class="lang-globe">🌐</span>
+          <span class="icon-label lang-label">{{ lang === 'es' ? 'EN' : 'ES' }}</span>
+        </button>
       </div>
 
       <!-- Mobile burger -->
-      <button class="burger" @click="mobileOpen = !mobileOpen" :aria-expanded="mobileOpen" aria-label="Menú móvil"
+      <button class="burger" @click="mobileOpen = !mobileOpen" :aria-expanded="mobileOpen" :aria-label="lang === 'es' ? 'Menú móvil' : 'Mobile menu'"
         id="nav-burger" :class="{ open: mobileOpen }">
         <span></span><span></span><span></span>
       </button>
@@ -64,6 +75,14 @@
           </svg>
           LinkedIn ↗
         </a>
+        <button
+          class="mobile-link mobile-lang"
+          @click="toggleLang(); mobileOpen = false"
+          :aria-label="lang === 'es' ? 'Switch to English' : 'Cambiar a Español'"
+        >
+          <span>🌐</span>
+          {{ lang === 'es' ? 'English' : 'Español' }}
+        </button>
       </div>
     </Transition>
   </nav>
@@ -71,12 +90,14 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useLanguage } from '../composables/useLanguage.js'
 
 const isScrolled = ref(false)
 const mobileOpen = ref(false)
 const activeSection = ref('inicio')
+const { lang, toggleLang } = useLanguage()
 
-const links = [
+const linksEs = [
   { href: '#inicio', label: 'Inicio', section: 'inicio' },
   { href: '#sobre-mi', label: 'Sobre mí', section: 'sobre-mi' },
   { href: '#trayectoria', label: 'Trayectoria', section: 'trayectoria' },
@@ -84,6 +105,16 @@ const links = [
   { href: '#proyectos', label: 'Proyectos', section: 'proyectos' },
   { href: '#contacto', label: 'Contacto', section: 'contacto' },
 ]
+const linksEn = [
+  { href: '#inicio', label: 'Home', section: 'inicio' },
+  { href: '#sobre-mi', label: 'About', section: 'sobre-mi' },
+  { href: '#trayectoria', label: 'Journey', section: 'trayectoria' },
+  { href: '#skills', label: 'Skills', section: 'skills' },
+  { href: '#proyectos', label: 'Projects', section: 'proyectos' },
+  { href: '#contacto', label: 'Contact', section: 'contacto' },
+]
+import { computed } from 'vue'
+const links = computed(() => lang.value === 'es' ? linksEs : linksEn)
 
 function onScroll() {
   isScrolled.value = window.scrollY > 40
@@ -94,12 +125,12 @@ function onScroll() {
 
   // If at the very bottom, activate the last section
   if (window.scrollY + winHeight >= docHeight - 50) {
-    activeSection.value = links[links.length - 1].section
+    activeSection.value = links.value[links.value.length - 1]?.section
     return
   }
 
   // Otherwise, find which section is currently in the upper half of the viewport
-  for (const link of links) {
+  for (const link of links.value) {
     const el = document.getElementById(link.section)
     if (el) {
       const rect = el.getBoundingClientRect()
@@ -244,6 +275,49 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   background: rgba(100, 120, 255, 0.18);
   border-color: var(--clr-blue-gal);
   box-shadow: 0 4px 16px rgba(100, 120, 255, 0.3);
+}
+
+.nav-icon-btn--lang {
+  color: var(--clr-text-muted);
+  border-color: rgba(200, 150, 245, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.nav-icon-btn--lang:hover {
+  background: rgba(180, 110, 245, 0.15);
+  border-color: var(--clr-violet-soft);
+  color: var(--clr-lilac);
+  box-shadow: 0 4px 16px var(--clr-glow);
+}
+
+.lang-globe {
+  font-size: 0.95em;
+  line-height: 1;
+}
+
+.lang-label {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-size: 0.78rem;
+}
+
+.mobile-lang {
+  color: var(--clr-text-muted);
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 500;
+  width: 100%;
+}
+
+.mobile-lang:hover {
+  color: var(--clr-lilac);
+  background: rgba(180, 110, 245, 0.12);
 }
 
 /* Burger */

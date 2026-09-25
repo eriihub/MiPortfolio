@@ -4,11 +4,11 @@
     <div class="orb orb-tray-2" aria-hidden="true"></div>
     <div class="container">
       <div class="section-header" ref="headerEl">
-        <div class="section-label">⟡ ₊ ⊹ Trayectoria</div>
+        <div class="section-label">⟡ ₊ ⊹ {{ lang === 'es' ? 'Trayectoria' : 'Journey' }}</div>
         <h2 class="section-title" id="trayectoria-title">
-          Mi <span class="accent">recorrido</span>
+          {{ lang === 'es' ? 'Mi' : 'My' }} <span class="accent">{{ lang === 'es' ? 'recorrido' : 'journey' }}</span>
         </h2>
-        <p class="section-subtitle">Formación y experiencia que me han traído hasta aquí ✦</p>
+        <p class="section-subtitle">{{ lang === 'es' ? 'Formación y experiencia que me han traído hasta aquí ✦' : 'Education and experience that have brought me here ✦' }}</p>
       </div>
 
       <div class="tray-layout" ref="layoutEl">
@@ -16,7 +16,7 @@
         <div class="tray-col">
           <div class="col-heading">
             <div class="col-icon">&nbsp;🕮&nbsp;</div>
-            <span class="col-title">Formación</span>
+            <span class="col-title">{{ lang === 'es' ? 'Formación' : 'Education' }}</span>
           </div>
 
           <div class="timeline">
@@ -60,7 +60,7 @@
         <div class="tray-col">
           <div class="col-heading">
             <div class="col-icon">&nbsp;⚡︎&nbsp;</div>
-            <span class="col-title">Competencias clave</span>
+            <span class="col-title">{{ lang === 'es' ? 'Competencias clave' : 'Key Competencies' }}</span>
           </div>
 
           <!-- Competencias con barras -->
@@ -79,18 +79,18 @@
           <!-- Idiomas -->
           <div class="col-heading" style="margin-top: 32px;">
             <div class="col-icon">🌐</div>
-            <span class="col-title">Idiomas</span>
+            <span class="col-title">{{ lang === 'es' ? 'Idiomas' : 'Languages' }}</span>
           </div>
 
           <div class="languages-grid">
-            <div v-for="lang in languages" :key="lang.name" class="lang-card glass" :id="`lang-${lang.key}`">
-              <span class="lang-flag">{{ lang.flag }}</span>
+            <div v-for="l in languages" :key="l.name" class="lang-card glass" :id="`lang-${l.key}`">
+              <span class="lang-flag">{{ l.flag }}</span>
               <div class="lang-info">
-                <span class="lang-name">{{ lang.name }}</span>
-                <span class="lang-lvl">{{ lang.level }}</span>
+                <span class="lang-name">{{ l.name }}</span>
+                <span class="lang-lvl">{{ l.level }}</span>
               </div>
               <div class="lang-dots">
-                <span v-for="n in 5" :key="n" class="ldot" :class="{ lit: n <= lang.dots }"></span>
+                <span v-for="n in 5" :key="n" class="ldot" :class="{ lit: n <= l.dots }"></span>
               </div>
             </div>
           </div>
@@ -101,12 +101,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
+import { useLanguage } from '../composables/useLanguage.js'
+const { lang } = useLanguage()
 
 const headerEl = ref(null)
 const layoutEl = ref(null)
 
-const education = [
+const educationEs = [
   {
     id: 'dam',
     date: '2024 – 2026',
@@ -138,8 +140,41 @@ const education = [
     tags: ['Tecnología', 'Matemáticas', 'Informática'],
   },
 ]
+const educationEn = [
+  {
+    id: 'dam',
+    date: '2024 – 2026',
+    type: 'done',
+    typeLabel: 'Completed',
+    title: 'Higher Technician in Multiplatform Application Development',
+    institution: 'Vocational Training (CFGS · DAM) IES El Rincón',
+    desc: 'Application development in client/server environments, databases, object-oriented programming and multiplatform interfaces.',
+    tags: ['Java', 'Angular', 'MySQL', 'Git'],
+  },
+  {
+    id: 'angular-cert',
+    date: 'Coming soon',
+    type: 'current',
+    typeLabel: 'In preparation',
+    title: 'Official Angular Certification',
+    institution: 'Certificates.dev',
+    desc: 'Preparation to obtain the official certificate validating mastery of the framework for scalable web applications.',
+    tags: ['Angular', 'TypeScript', 'Frontend'],
+  },
+  {
+    id: 'bach',
+    date: '2022 – 2024',
+    type: 'done',
+    typeLabel: 'Completed',
+    title: 'Technology Baccalaureate',
+    institution: 'Instituto de Educación Secundaria Mesa y López',
+    desc: 'Specialization in technology, mathematics and applied computing.',
+    tags: ['Technology', 'Mathematics', 'Computing'],
+  },
+]
+const education = computed(() => lang.value === 'es' ? educationEs : educationEn)
 
-const competences = [
+const competencesEs = [
   { key: 'backend', name: 'Backend Development', level: 'Intermedio', pct: 60, hue: 275 },
   { key: 'frontend', name: 'Frontend & UI Design', level: 'Avanzado', pct: 78, hue: 310 },
   { key: 'db', name: 'Bases de datos (SQL)', level: 'Intermedio', pct: 65, hue: 255 },
@@ -148,10 +183,26 @@ const competences = [
   { key: 'ux', name: 'UX / Visual Design', level: 'Avanzado', pct: 82, hue: 320 },
 ]
 
-const languages = [
-  { key: 'es', name: 'Español', flag: '🇪🇸', level: 'Nativo', dots: 5 },
-  { key: 'en', name: 'Inglés', flag: '🇬🇧', level: 'B2.2 · En preparación · EOI Las Palmas', dots: 4 },
+const competencesEn = [
+  { key: 'backend', name: 'Backend Development', level: 'Intermediate', pct: 60, hue: 275 },
+  { key: 'frontend', name: 'Frontend & UI Design', level: 'Advanced', pct: 78, hue: 310 },
+  { key: 'db', name: 'Databases (SQL)', level: 'Intermediate', pct: 65, hue: 255 },
+  { key: 'oop', name: 'OOP & Patterns', level: 'Intermediate', pct: 62, hue: 290 },
+  { key: 'git', name: 'Git & Version Control', level: 'Advanced', pct: 75, hue: 280 },
+  { key: 'ux', name: 'UX / Visual Design', level: 'Advanced', pct: 82, hue: 320 },
 ]
+const competences = computed(() => lang.value === 'es' ? competencesEs : competencesEn)
+
+const languagesEs = [
+  { key: 'es', name: 'Español', flag: '🇪🇸', level: 'Nativo', dots: 5 },
+  { key: 'en', name: 'Inglés', flag: '🇬🇧', level: 'B2 · En preparación', dots: 4 },
+]
+
+const languagesEn = [
+  { key: 'es', name: 'Spanish', flag: '🇪🇸', level: 'Native', dots: 5 },
+  { key: 'en', name: 'English', flag: '🇬🇧', level: 'B2 · In preparation', dots: 4 },
+]
+const languages = computed(() => lang.value === 'es' ? languagesEs : languagesEn)
 
 onMounted(() => {
   const obs = new IntersectionObserver(entries => {
