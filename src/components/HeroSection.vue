@@ -255,7 +255,6 @@ onUnmounted(() => { if (animFrameId) cancelAnimationFrame(animFrameId) })
   font-weight: 300;
   color: var(--clr-text-muted);
   letter-spacing: 0.12em;
-  text-transform: lowercase;
   font-style: italic;
 }
 
